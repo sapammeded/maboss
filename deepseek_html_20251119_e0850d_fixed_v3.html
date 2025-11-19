@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Patroli Security - Professional System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4458d9 0%, #1e3c72 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #ffffff 0%, #f1f4f8 100%);
+            border-radius: 25px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a2a4c 0%, #293d64 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid #ffc107;
+        }
+
+        .header::before {
+            content: '🛡️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10em;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .info-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e0e7ff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .info-item label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1a2a4c;
+            font-size: 1.1em;
+        }
+
+        .info-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .info-input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
+        }
+
+        .datetime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .mode-selector {
+            padding: 25px 30px;
+            background: #fef0cd;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 8px solid #f39c12;
+        }
+
+        .mode-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .mode-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 2px solid white;
+        }
+
+        .mode-online {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+        }
+
+        .mode-offline {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+        }
+
+        /* AREA BUTTONS - 3 KOLOM KECIL */
+        .area-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 15px;
+            background: #eaf0f6;
+        }
+
+        .area-btn-small {
+            background: #ffffff;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            color: #2c3e50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            min-height: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            word-break: break-word;
+        }
+
+        .area-btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .area-btn-small.active {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+
+        .add-area-btn {
+            background: #ffffff;
+            border: 2px dashed #27ae60;
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            grid-column: span 3;
+        }
+
+        .add-area-btn:hover {
+            background: #27ae60;
+            color: #ffffff;
+        }
+
+        /* GALLERY UPLOAD SECTION */
+        .gallery-section {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+            color: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 8px solid #732d91;
+        }
+
+        .gallery-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .gallery-actions {
+            padding: 10px;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .gallery-filename {
+            font-size: 0.8em;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .gallery-item-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .gallery-btn {
+            flex: 1;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.7em;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #3498db;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+        }
+
+        .camera-section {
+            padding: 30px;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .camera-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #cameraView {
+            width: 100%;
+            max-width: 600px;
+            height: 450px;
+            border: 5px solid #1a2a4c;
+            border-radius: 20px;
+            background: #000;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .camera-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, #27ae60 0%, #219653 100%);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(145deg, #3498db 0%, #2980b9 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(145deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(145deg, #f39c12 0%, #d35400 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(145deg, #2ecc71 0%, #27ae60 100%);
+        }
+
+        .btn-info {
+            background: linear-gradient(145deg, #9b59b6 0%, #8e44ad 100%);
+        }
+
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .photo-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .photo-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 2px solid #3498db;
+        }
+
+        .photo-preview {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .photo-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(44, 62, 80, 0.8);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .photo-description {
+            padding: 10px;
+            font-size: 0.85em;
+            line-height: 1.4;
+            max-height: 48px;
+            overflow: hidden;
+            background: #d4edda;
+        }
+
+        .photo-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .photo-action-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .photo-action-btn.delete {
+            background: #e74c3c;
+        }
+
+        .photo-status {
+            background: #27ae60;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.7em;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .input-section {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #1a2a4c;
+            font-size: 1.3em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            font-size: 1.05em;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2ecc71;
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.2);
+        }
+
+        .unlimited-description {
+            min-height: 120px;
+            max-height: 400px;
+            resize: vertical;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .current-area {
+            background: #fff3cd;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border-left: 8px solid #f39c12;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .current-area h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .status-section {
+            padding: 30px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .completion-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .area-status {
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            background: #ecf0f1;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+        }
+
+        .area-status.completed {
+            background: #d4edda;
+            color: #155724;
+            border: 3px solid #27ae60;
+        }
+
+        .area-status.pending {
+            background: #fff3cd;
+            color: #856404;
+            border: 3px solid #f39c12;
+        }
+
+        .download-section {
+            text-align: center;
+            padding: 40px;
+            background: #1a2a4c;
+            color: white;
+        }
+
+        .signature-section {
+            padding: 30px;
+            background: #eaf0f6;
+            border-top: 1px solid #eee;
+        }
+
+        .signature-container {
+            border: 3px dashed #3498db;
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            max-width: 450px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .signature-canvas {
+            width: 100%;
+            display: block;
+            height: 150px;
+        }
+
+        .download-options {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .download-btn {
+            padding: 25px 20px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+
+        .btn-pdf { 
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); 
+        }
+
+        .btn-clear {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            color: white;
+            padding: 20px 40px;
+            font-size: 1.4em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-clear:hover {
+            background: #d35400;
+            transform: scale(1.05);
+        }
+
+        /* NOTIFIKASI */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: #34495e !important;
+            color: #e74c3c !important;
+        }
+
+        .notification.success {
+            background: #2ecc71 !important;
+            color: #ffffff !important;
+        }
+
+        .notification.warning {
+            background: #f39c12 !important;
+            color: #ffffff !important;
+        }
+
+        .notification.info {
+            background: #3498db !important;
+            color: #ffffff !important;
+        }
+
+        .auto-save-notice {
+            background: #cce5ff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1em;
+            border: 1px solid #b8daff;
+        }
+
+        .whatsapp-section {
+            background: #25D366;
+            color: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+        
+        .description-modal, .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10001;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content, .password-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .area-buttons {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            
+            .add-area-btn {
+                grid-column: span 2 !important;
+            }
+            
+            .camera-controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            #cameraView {
+                height: 300px;
+            }
+            
+            .info-grid, .datetime-grid, .completion-status {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .area-btn-small {
+                padding: 10px 6px !important;
+                min-height: 45px !important;
+                font-size: 0.8em !important;
+            }
+
+            .gallery-preview {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .area-buttons {
+                grid-template-columns: 1fr !important;
+                gap: 6px !important;
+            }
+            
+            .add-area-btn {
+                grid-column: span 1 !important;
+            }
+            
+            .area-btn-small {
+                min-height: 40px !important;
+            }
+
+            .gallery-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Added for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5QmYv1n3Zr2+gZr1Svxg1EwQ3l2y7xq6X0x2Yq8R6uF6g1vN0QFq3Zq1cIfh4zG7X5uG1K7q2R3Y5Zp4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-...==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="notification" id="notification"></div>
+    
+    <div class="flash-continuous" id="flashContinuous"></div>
+    
+    <!-- Modals -->
+    <div class="description-modal" id="descriptionModal">
+        <div class="modal-content">
+            <h3>Edit Deskripsi Foto</h3>
+            <textarea id="modalDescription" class="form-control unlimited-description" placeholder="Deskripsi foto..." rows="4"></textarea>
+            <div class="char-count">Karakter: <span id="modalCharCount">0</span></div>
+            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="savePhotoDescription()">💾 Simpan</button>
+                <button class="btn btn-danger" onclick="closeDescriptionModal()">❌ Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="password-modal" id="passwordModal">
+        <div class="password-content">
+            <h3>🔒 Akses Fitur Galeri</h3>
+            <p>Masukkan master password:</p>
+            <input type="password" id="passwordInput" 
+                   style="width: 100%; padding: 12px; border: 2px solid #bdc3c7; border-radius: 8px; font-size: 1em; margin: 15px 0;"
+                   placeholder="Master Password">
+            <div style=const container = document.body;"margin-top:6px; font-size:0.95em; display:flex; align-items:center; gap:8px;const container = document.body;">
+                <input type=const container = document.body;"checkboxconst container = document.body;" id=const container = document.body;"showPasswordToggleconst container = document.body;"> <label for=const container = document.body;"showPasswordToggleconst container = document.body;">Tampilkan password</label>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-success" onclick="verifyGalleryPassword()" style="flex: 1;">✅ Masuk</button>
+                <button class="btn btn-danger" onclick="closePasswordModal()" style="flex: 1;">❌ Batal</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="coverSection" style="background:linear-gradient(135deg,#4458d9 0%,#1e3c72 100%); color:white; padding:28px 20px; text-align:center;">
+        <h1 id="coverHeader" style="margin:0; font-size:28px; letter-spacing:1px;">FORM PATROLI SECURITY</h1>
+        <p style="margin:8px 0 18px 0; opacity:0.9;">Laporan Patrol - Halaman Sampul</p>
+        <div id="logoUploadWrap" style="margin: 10px auto; max-width:720px;">
+            <input type="file" id="logoUpload" accept="image/*" style="display:block;margin:10px auto;">
+            <div style="display:flex; justify-content:center; gap:12px; align-items:center; flex-direction:column;">
+                <img id="logoCenter" src="" alt="Logo" style="max-width:420px; width:80%; height:auto; display:block; border-radius:12px; background:white; padding:10px; box-shadow:0 10px 30px rgba(0,0,0,0.25);" />
+                <div style="margin-top:8px;">
+                    <button id="removeLogoBtn" class="btn btn-danger" style="display:none;">Hapus Logo</button>
+                </div>
+            </div>
+            <small style="display:block; margin-top:8px; opacity:0.9;">Logo hanya akan muncul di <strong>Halaman Sampul</strong> saat ekspor PDF.</small>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>FORM PATROLI SECURITY</h1>
+            <p>Professional Camera System With Live Camera Verification</p>
+        </div>
+
+        <div class="auto-save-notice">
+            💾 <strong>SECURITY SYSTEM</strong> - Auto Save Enabled
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <h3>🌐 MODE OPERASI</h3>
+            <p>Pilih mode sesuai kondisi jaringan:</p>
+            <div class="mode-buttons">
+                <button class="mode-btn mode-online active" onclick="setMode('online')" id="onlineModeBtn">
+                    🌐 ONLINE MODE
+                </button>
+                <button class="mode-btn mode-offline" onclick="setMode('offline')" id="offlineModeBtn">
+                    📴 OFFLINE MODE
+                </button>
+            </div>
+            <div id="modeStatus" style="margin-top: 10px;">
+                <span style="background: #27ae60; color: white; padding: 5px 10px; border-radius: 5px;">
+                    ✅ ONLINE MODE - WhatsApp aktif
+                </span>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-grid">
+                <div class="info-item">
+                    <label for="petugasName">👮 NAMA PETUGAS</label>
+                    <input type="text" class="info-input" id="petugasName" placeholder="Masukkan nama petugas">
+                </div>
+                <div class="info-item">
+                    <label for="shift">🕐 SHIFT</label>
+                    <select class="info-input" id="shift">
+                        <option value="">Pilih Shift</option>
+                        <option value="Pagi">Shift Pagi</option>
+                        <option value="Sore">Shift Sore</option>
+                        <option value="Malam">Shift Malam</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="datetime-grid">
+                <div class="info-item">
+                    <label for="tanggal">📅 TANGGAL</label>
+                    <input type="date" class="info-input" id="tanggal">
+                </div>
+                <div class="info-item">
+                    <label for="jam">⏰ JAM</label>
+                    <input type="time" class="info-input" id="jam">
+                </div>
+                <div class="info-item">
+                    <label for="tahun">📋 TAHUN</label>
+                    <input type="number" class="info-input" id="tahun" min="2024" max="2030" value="2024">
+                </div>
+            </div>
+        </div>
+
+        <!-- WhatsApp Section -->
+        <div class="whatsapp-section" id="whatsappSection">
+            <h3>📢 NOTIFIKASI WHATSAPP</h3>
+            <p>Kirim notifikasi sebelum akses camera</p>
+            <button class="btn btn-warning" onclick="sendWhatsAppNotifications()" id="whatsappBtn">
+                📱 KIRIM NOTIFIKASI WA
+            </button>
+            <div id="whatsappStatus" style="margin-top: 10px; display: none;">
+                <span style="background: white; color: #25D366; padding: 5px 10px; border-radius: 5px;">
+                    ✅ Notifikasi WhatsApp sudah dikirim
+                </span>
+            </div>
+        </div>
+
+        <!-- Gallery Section -->
+        <div class="gallery-section" id="gallerySection">
+            <h3>🖼️ UPLOAD DARI GALERI</h3>
+            <p>Akses terbatas dengan master password</p>
+            <button class="btn btn-info" onclick="requestGalleryAccess()" id="galleryBtn">
+                🔓 BUKA AKSES GALERI
+            </button>
+            
+            <div id="galleryContent" style="display: none;">
+                <div style="margin: 20px 0;">
+                    <button class="btn btn-success" onclick="openGallery()" id="selectGalleryBtn">
+                        📁 PILIH FOTO DARI GALERI
+                    </button>
+                </div>
+                
+                <div id="galleryPreview" class="gallery-preview" style="display: none;"></div>
+                
+                <div id="galleryActions" style="display: none;">
+                    <button class="btn btn-primary" onclick="addGalleryToPatrol()">
+                        💾 TAMBAHKAN KE PATROLI
+                    </button>
+                    <button class="btn btn-danger" onclick="clearGallerySelection()">
+                        🗑️ HAPUS SEMUA
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Area Buttons -->
+        <div class="area-buttons" id="areaButtonsContainer"></div>
+
+        <!-- Camera Section -->
+        <div class="camera-section">
+            <div class="current-area" id="currentAreaDisplay" style="display: none;">
+                <h3 id="currentAreaTitle">Area yang Dipilih</h3>
+                <p>Ambil foto langsung dengan camera untuk area ini</p>
+                <div id="photoCounter" style="margin-top: 10px; font-weight: bold; color: #2c3e50;">
+                    📷 Foto diambil: <span id="currentPhotoCount">0</span> | 
+                    💾 Foto tersimpan: <span id="savedPhotoCount">0</span>
+                </div>
+            </div>
+
+            <div class="camera-container">
+                <video id="cameraView" autoplay playsinline></video>
+                <div class="camera-controls">
+                    <button class="btn btn-secondary" onclick="startCamera()" id="startCameraBtn">
+                        📷 Start Camera
+                    </button>
+                    <button class="btn btn-warning" id="flashManualBtn" onclick="toggleManualFlash()">
+                        🔦 Flash Manual: OFF
+                    </button>
+                    <button class="btn btn-primary" id="captureBtn" onclick="capturePhoto()" disabled>
+                        📸 Ambil Foto
+                    </button>
+                    <button class="btn btn-info" onclick="triggerExternalCameraSelection()">
+                        📱 Ambil Foto (HP)
+                    </button>
+                    <button class="btn btn-success" id="saveAllBtn" onclick="saveAllPhotos()" disabled>
+                        💾 Simpan Semua Foto
+                    </button>
+                    <button class="btn btn-warning" onclick="addGlobalDescription()">
+                        📝 Tambah Deskripsi Global
+                    </button>
+                </div>
+            </div>
+
+            <div class="photo-preview-container" id="photoPreviewContainer"></div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <div class="form-group">
+                <label for="globalDescription">📝 Deskripsi Global</label>
+                <textarea class="form-control unlimited-description" id="globalDescription" placeholder="Deskripsi untuk semua foto..." rows="4"></textarea>
+                <div class="char-count">Karakter: <span id="globalCharCount">0</span></div>
+            </div>
+
+            <div class="form-group">
+                <label for="additionalNotes">✍️ Catatan Tambahan</label>
+                <textarea class="form-control unlimited-description" id="additionalNotes" placeholder="Tambahkan catatan penting..." rows="4"></textarea>
+                <div class="char-count">Karakter: <span id="notesCharCount">0</span></div>
+            </div>
+        </div>
+
+        <!-- Status Section -->
+        <div class="status-section">
+            <h2>STATUS PENYELESAIAN AREA</h2>
+            <div class="completion-status" id="completionStatus"></div>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <h2>TANDA TANGAN PETUGAS</h2>
+            <div class="signature-container">
+                <canvas id="signatureCanvas" class="signature-canvas"></canvas>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="btn btn-danger" onclick="clearSignature()">
+                    🗑️ Hapus Tanda Tangan
+                </button>
+            </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="download-section">
+            <h2>EXPORT LAPORAN</h2>
+            <p>Pastikan semua area telah selesai dan data terisi dengan benar.</p>
+            <div class="download-options">
+                <button class="download-btn btn-pdf" onclick="generatePDF()">
+                    📄 Download Laporan PDF
+                </button>
+            </div>
+            
+            <button class="btn-clear" onclick="clearAllData()">
+                🗑️ RESET SEMUA DATA
+            </button>
+        </div>
+    </div>
+
+    <!-- Hidden file inputs -->
+    <input type="file" id="galleryInput" multiple accept="image/*" style="display: none;">
+    <input type="file" id="fileInputCapture" accept="image/*" capture="environment" style="display: none;">
+
+    <script>
+        // ==================================================
+        // KONSTANTA & INITIATION
+        // ==================================================
+        const AREA_NAMES = {
+            1: 'AREA SISI TIMUR',
+            2: 'AREA SISI BARAT', 
+            3: 'AREA SISI UTARA',
+            4: 'AREA SISI SELATAN',
+            5: 'GROUND FLOOR SUBSTATION',
+            6: 'LANTAI 1 SUBSTATION'
+        };
+
+        const GALLERY_PASSWORD = "silitpitik";
+        const MAX_PHOTOS_PER_AREA = 50;
+
+        let patrolData = {};
+        let customAreas = [];
+        let nextAreaId = 7;
+        let galleryPhotos = [];
+        let galleryAccessGranted = false;
+        let currentArea = null;
+        let currentPhotos = [];
+        let currentEditingPhotoIndex = null;
+        let currentEditingPhotoType = null; // 'session' or 'saved'
+        let stream = null;
+        let whatsappSent = false;
+        let currentMode = 'online';
+        let manualFlashOn = false;
+
+        // ==================================================
+        // INITIALIZATION
+        // ==================================================
+        function initializeApp() {
+            initializePatrolData();
+            loadCustomAreas();
+            updateAreaButtonsLayout();
+            updateCompletionStatus();
+            setupEventListeners();
+            setCurrentDateTime();
+            
+            showNotification('Aplikasi Form Patroli siap digunakan!', 'success');
+        }
+
+        function initializePatrolData() {
+            patrolData = {
+                1: { name: AREA_NAMES[1], completed: false, photos: [], descriptions: [], notes: "", globalDescription: "" },
+                2: { name: AREA_NAMES[2], completed: false, photos: [], descriptions: [], notes: "", globalDescription: "" },
+                3: { name: AREA_NAMES[3], completed: false, photos: [], descriptions: [], notes: "", globalDescription: "" },
+                4: { name: AREA_NAMES[4], completed: false, photos: [], descriptions: [], notes: "", globalDescription: "" },
+                5: { name: AREA_NAMES[5], completed: false, photos: [], descriptions: [], notes: "", globalDescription: "" },
+                6: { name: AREA_NAMES[6], completed: false, photos: [], descriptions: [], notes: "", globalDescription: "" }
+            };
+        }
+
+        function setupEventListeners() {
+            // Character counters
+            document.getElementById('globalDescription').addEventListener('input', function() {
+                document.getElementById('globalCharCount').textContent = this.value.length;
+            });
+
+            document.getElementById('additionalNotes').addEventListener('input', function() {
+                document.getElementById('notesCharCount').textContent = this.value.length;
+            });
+
+            document.getElementById('modalDescription').addEventListener('input', function() {
+                document.getElementById('modalCharCount').textContent = this.value.length;
+            });
+
+            // Gallery file input
+            document.getElementById('galleryInput').addEventListener('change', handleGallerySelection);
+            
+            // External camera
+            document.getElementById('fileInputCapture').addEventListener('change', handleExternalCamera);
+            
+            // Auto-save on input changes
+            document.getElementById('petugasName').addEventListener('input', saveData);
+            document.getElementById('shift').addEventListener('change', saveData);
+            document.getElementById('tanggal').addEventListener('change', saveData);
+            document.getElementById('jam').addEventListener('change', saveData);
+            document.getElementById('tahun').addEventListener('change', saveData);
+        }
+
+        function setCurrentDateTime() {
+            const now = new Date();
+            document.getElementById('tanggal').value = now.toISOString().split('T')[0];
+            document.getElementById('jam').value = now.toTimeString().slice(0,5);
+            document.getElementById('tahun').value = now.getFullYear();
+        }
+
+        // ==================================================
+        // NOTIFICATION SYSTEM
+        // ==================================================
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // ==================================================
+        // MODE MANAGEMENT
+        // ==================================================
+        function setMode(mode) {
+            currentMode = mode;
+            whatsappSent = (mode === 'offline');
+            
+            document.getElementById('onlineModeBtn').classList.toggle('active', mode === 'online');
+            document.getElementById('offlineModeBtn').classList.toggle('active', mode === 'offline');
+            
+            const modeStatus = document.getElementById('modeStatus');
+            if (mode === 'online') {
+                modeStatus.innerHTML = '<span style="background: #27ae60; color: white; padding: 5px 10px; border-radius: 5px;">✅ ONLINE MODE - WhatsApp aktif</span>';
+            } else {
+                modeStatus.innerHTML = '<span style="background: #95a5a6; color: white; padding: 5px 10px; border-radius: 5px;">📴 OFFLINE MODE - Tanpa WhatsApp</span>';
+            }
+            
+            showNotification(`Mode ${mode.toUpperCase()} diaktifkan`, 'info');
+        }
+
+        // ==================================================
+        // WHATSAPP NOTIFICATION
+        // ==================================================
+        function sendWhatsAppNotifications() {
+            const petugasName = document.getElementById('petugasName').value.trim();
+            const shift = document.getElementById('shift').value;
+            
+            if (!petugasName || !shift) {
+                showNotification('Isi nama petugas dan shift terlebih dahulu!', 'error');
+                return;
+            }
+            
+            const message = `🚨 PATROLI DIMULAIconst container = document.body;nconst container = document.body;nPetugas: ${petugasName}const container = document.body;nShift: ${shift}const container = document.body;nWaktu: ${new Date().toLocaleString()}`;
+            
+            // Simulate WhatsApp sending
+            setTimeout(() => {
+                whatsappSent = true;
+                document.getElementById('whatsappStatus').style.display = 'block';
+                showNotification('Notifikasi WhatsApp berhasil dikirim!', 'success');
+            }, 2000);
+        }
+
+        // ==================================================
+        // GALLERY SYSTEM
+        // ==================================================
+        function requestGalleryAccess() {
+            if (!currentArea) {
+                showNotification('Pilih area terlebih dahulu!', 'warning');
+                return;
+            }
+            
+            if (galleryAccessGranted) {
+                openGallery();
+            } else {
+                document.getElementById('passwordModal').style.display = 'flex';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        function verifyGalleryPassword() {
+            const password = document.getElementById('passwordInput').value;
+            
+            if (password === GALLERY_PASSWORD) {
+                galleryAccessGranted = true;
+                closePasswordModal();
+                document.getElementById('galleryContent').style.display = 'block';
+                document.getElementById('galleryBtn').style.display = 'none';
+                showNotification('Akses galeri diberikan!', 'success');
+            } else {
+                showNotification('Password salah!', 'error');
+            }
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        function openGallery() {
+            document.getElementById('galleryInput').click();
+        }
+
+        function handleGallerySelection(event) {
+            const files = event.target.files;
+            if (!files.length) return;
+            
+            galleryPhotos = [];
+            
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    galleryPhotos.push({
+                        data: e.target.result,
+                        description: '',
+                        fileName: file.name
+                    });
+                    
+                    if (galleryPhotos.length === files.length) {
+                        updateGalleryPreview();
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateGalleryPreview() {
+            const container = document.getElementById('galleryPreview');
+            const actions = document.getElementById('galleryActions');
+            
+            container.innerHTML = '';
+            galleryPhotos.forEach((photo, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="${photo.data}" alt="${photo.fileName}">
+                    <div class="gallery-actions">
+                        <div class="gallery-filename">${photo.fileName}</div>
+                        <div class="gallery-item-actions">
+                            <button class="gallery-btn btn-edit" onclick="editGalleryPhoto(${index})">✏️</button>
+                            <button class="gallery-btn btn-delete" onclick="removeGalleryPhoto(${index})">🗑️</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            
+            container.style.display = 'grid';
+            actions.style.display = 'block';
+        }
+
+        function removeGalleryPhoto(index) {
+            galleryPhotos.splice(index, 1);
+            updateGalleryPreview();
+        }
+
+        function editGalleryPhoto(index) {
+            currentEditingPhotoIndex = index;
+            currentEditingPhotoType = 'gallery';
+            document.getElementById('modalDescription').value = galleryPhotos[index].description;
+            document.getElementById('modalCharCount').textContent = galleryPhotos[index].description.length;
+            document.getElementById('descriptionModal').style.display = 'flex';
+        }
+
+        function addGalleryToPatrol() {
+            if (!currentArea) {
+                showNotification('Pilih area terlebih dahulu!', 'warning');
+                return;
+            }
+            
+            galleryPhotos.forEach(photo => {
+                currentPhotos.push(photo);
+            });
+            
+            updatePhotoCounter();
+            updatePhotoPreview();
+            
+            showNotification(`${galleryPhotos.length} foto ditambahkan dari galeri!`, 'success');
+            clearGallerySelection();
+        }
+
+        function clearGallerySelection() {
+            galleryPhotos = [];
+            document.getElementById('galleryPreview').style.display = 'none';
+            document.getElementById('galleryActions').style.display = 'none';
+        }
+
+        // ==================================================
+        // AREA MANAGEMENT
+        // ==================================================
+        function loadCustomAreas() {
+            // Load from localStorage if needed
+        }
+
+        function updateAreaButtonsLayout() {
+            const container = document.getElementById('areaButtonsContainer');
+            container.innerHTML = '';
+            
+            // Default areas
+            for (let i = 1; i <= 6; i++) {
+                createAreaButton(container, i, AREA_NAMES[i]);
+            }
+            
+            // Custom areas
+            customAreas.forEach(area => {
+                createAreaButton(container, area.id, area.name);
+            });
+            
+            // Add custom area button
+            const addBtn = document.createElement('div');
+            addBtn.className = 'add-area-btn';
+            addBtn.innerHTML = '+ Tambah Area Custom';
+            addBtn.onclick = addCustomArea;
+            container.appendChild(addBtn);
+        }
+
+        function createAreaButton(container, id, name) {
+            const btn = document.createElement('div');
+            btn.className = 'area-btn-small';
+            btn.innerHTML = `${id}. ${name}`;
+            btn.onclick = () => selectArea(id);
+            container.appendChild(btn);
+        }
+
+        function addCustomArea() {
+            const areaName = prompt('Masukkan nama area custom:');
+            if (areaName) {
+                customAreas.push({
+                    id: nextAreaId,
+                    name: areaName
+                });
+                patrolData[nextAreaId] = {
+                    name: areaName,
+                    completed: false,
+                    photos: [],
+                    descriptions: [],
+                    notes: "",
+                    globalDescription: ""
+                };
+                nextAreaId++;
+                updateAreaButtonsLayout();
+                showNotification('Area custom ditambahkan!', 'success');
+            }
+        }
+
+        function selectArea(areaId) {
+            // Save current area data first
+            if (currentArea) {
+                saveCurrentAreaData();
+            }
+            
+            currentArea = areaId;
+            currentPhotos = [];
+            
+            // Update UI
+            document.querySelectorAll('.area-btn-small').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.getElementById('currentAreaTitle').textContent = `${areaId}. ${patrolData[areaId].name}`;
+            document.getElementById('globalDescription').value = patrolData[areaId].globalDescription || '';
+            document.getElementById('additionalNotes').value = patrolData[areaId].notes || '';
+            document.getElementById('currentAreaDisplay').style.display = 'block';
+            
+            updatePhotoCounter();
+            updatePhotoPreview();
+            
+            showNotification(`Area ${patrolData[areaId].name} dipilih`, 'info');
+        }
+
+        function saveCurrentAreaData() {
+            if (currentArea) {
+                patrolData[currentArea].globalDescription = document.getElementById('globalDescription').value;
+                patrolData[currentArea].notes = document.getElementById('additionalNotes').value;
+            }
+        }
+
+        // ==================================================
+        // CAMERA FUNCTIONS
+        // ==================================================
+        async function startCamera() {
+            if (currentMode === 'online' && !whatsappSent) {
+                showNotification('Kirim notifikasi WhatsApp terlebih dahulu!', 'error');
+                return;
+            }
+            
+            if (!currentArea) {
+                showNotification('Pilih area terlebih dahulu!', 'warning');
+                return;
+            }
+            
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' }
+                });
+                
+                const video = document.getElementById('cameraView');
+                video.srcObject = stream;
+                document.getElementById('captureBtn').disabled = false;
+                
+                showNotification('Kamera siap digunakan!', 'success');
+            } catch (err) {
+                showNotification('Gagal mengakses kamera', 'error');
+            }
+        }
+
+        function toggleManualFlash() {
+            manualFlashOn = !manualFlashOn;
+            const btn = document.getElementById('flashManualBtn');
+            btn.textContent = `🔦 Flash Manual: ${manualFlashOn ? 'ON' : 'OFF'}`;
+            btn.style.background = manualFlashOn ? 
+                'linear-gradient(145deg, #f39c12 0%, #e67e22 100%)' : 
+                'linear-gradient(145deg, #f39c12 0%, #d35400 100%)';
+        }
+
+        function capturePhoto() {
+            if (!currentArea || currentPhotos.length >= MAX_PHOTOS_PER_AREA) {
+                showNotification('Pilih area atau batas foto tercapai!', 'warning');
+                return;
+            }
+            
+            const video = document.getElementById('cameraView');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
+            
+            currentPhotos.push({
+                data: canvas.toDataURL('image/jpeg'),
+                description: '',
+                timestamp: new Date().toISOString()
+            });
+            
+            updatePhotoCounter();
+            updatePhotoPreview();
+            
+            if (manualFlashOn) {
+                // Flash effect
+                const flash = document.getElementById('flashContinuous');
+                flash.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:white;z-index:9998;';
+                setTimeout(() => flash.style.cssText = '', 100);
+            }
+            
+            showNotification('Foto berhasil diambil!', 'success');
+        }
+
+        function triggerExternalCameraSelection() {
+            document.getElementById('fileInputCapture').click();
+        }
+
+        function handleExternalCamera(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentPhotos.push({
+                    data: e.target.result,
+                    description: '',
+                    timestamp: new Date().toISOString(),
+                    source: 'External Camera'
+                });
+                
+                updatePhotoCounter();
+                updatePhotoPreview();
+                showNotification('Foto dari kamera eksternal ditambahkan!', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ==================================================
+        // PHOTO MANAGEMENT - FIXED DESCRIPTION SYSTEM
+        // ==================================================
+        function updatePhotoCounter() {
+            if (!currentArea) return;
+            
+            document.getElementById('currentPhotoCount').textContent = currentPhotos.length;
+            document.getElementById('savedPhotoCount').textContent = patrolData[currentArea].photos.length;
+            document.getElementById('saveAllBtn').disabled = currentPhotos.length === 0;
+        }
+
+        function updatePhotoPreview() {
+            const container = document.getElementById('photoPreviewContainer');
+            container.innerHTML = '';
+            
+            // Current session photos
+            currentPhotos.forEach((photo, index) => {
+                container.appendChild(createPhotoCard(photo, index, 'session'));
+            });
+            
+            // Saved photos
+            if (currentArea && patrolData[currentArea].photos.length > 0) {
+                patrolData[currentArea].photos.forEach((photo, index) => {
+                    container.appendChild(createPhotoCard(photo, index, 'saved'));
+                });
+            }
+        }
+
+        function createPhotoCard(photo, index, type) {
+            const isSaved = type === 'saved';
+            const description = isSaved ? 
+                (patrolData[currentArea].descriptions[index] || 'Tidak ada deskripsi') : 
+                (photo.description || 'Tidak ada deskripsi');
+                
+            const card = document.createElement('div');
+            card.className = 'photo-card';
+            card.innerHTML = `
+                <img src="${photo.data || photo}" class="photo-preview">
+                <div class="photo-count">${isSaved ? 'SAVED' : 'SESI'} ${index + 1}</div>
+                <div class="photo-description">
+                    ${description}
+                    <div class="photo-status">${isSaved ? '✅ Tersimpan' : '⏳ Sesi Aktif'}</div>
+                </div>
+                <div class="photo-actions">
+                    <button class="photo-action-btn" onclick="editPhotoDescription(${index}, '${type}')">📝 Edit</button>
+                    <button class="photo-action-btn delete" onclick="deletePhoto(${index}, '${type}')">❌ Hapus</button>
+                </div>
+            `;
+            return card;
+        }
+
+        function editPhotoDescription(index, type) {
+            currentEditingPhotoIndex = index;
+            currentEditingPhotoType = type;
+            
+            let currentDescription = '';
+            if (type === 'session') {
+                currentDescription = currentPhotos[index].description || '';
+            } else if (type === 'saved') {
+                currentDescription = patrolData[currentArea].descriptions[index] || '';
+            }
+            
+            document.getElementById('modalDescription').value = currentDescription;
+            document.getElementById('modalCharCount').textContent = currentDescription.length;
+            document.getElementById('descriptionModal').style.display = 'flex';
+        }
+
+        // FIXED: Save photo description function
+        
+        function savePhotoDescription() {
+            const newDesc = document.getElementById('modalDescription').value;
+
+            if (currentEditingPhotoIndex !== null && currentEditingPhotoType) {
+                if (currentEditingPhotoType === 'session') {
+                    currentPhotos[currentEditingPhotoIndex].description = newDesc;
+                    showNotification('Deskripsi foto sesi berhasil disimpan!', 'success');
+                } else if (currentEditingPhotoType === 'saved') {
+                    patrolData[currentArea].descriptions[currentEditingPhotoIndex] = newDesc;
+                    showNotification('Deskripsi foto tersimpan berhasil diperbarui!', 'success');
+                } else if (currentEditingPhotoType === 'gallery') {
+                    // ✅ TAMBAHKAN PENANGANAN UNTUK GALLERY
+                    galleryPhotos[currentEditingPhotoIndex].description = newDesc;
+                    showNotification('Deskripsi foto galeri berhasil disimpan!', 'success');
+                }
+
+                updatePhotoPreview();
+                if (currentEditingPhotoType === 'gallery') {
+                    updateGalleryPreview(); // ✅ UPDATE PREVIEW GALERI JUGA
+                }
+            } else {
+                showNotification('Tidak ada foto yang dipilih untuk diedit!', 'error');
+            }
+
+            closeDescriptionModal();
+        }
+
+
+        function closeDescriptionModal() {
+            document.getElementById('descriptionModal').style.display = 'none';
+            currentEditingPhotoIndex = null;
+            currentEditingPhotoType = null;
+        }
+
+        function deletePhoto(index, type) {
+            if (confirm('Hapus foto?')) {
+                if (type === 'session') {
+                    currentPhotos.splice(index, 1);
+                    showNotification('Foto sesi dihapus!', 'info');
+                } else if (type === 'saved') {
+                    patrolData[currentArea].photos.splice(index, 1);
+                    patrolData[currentArea].descriptions.splice(index, 1);
+                    patrolData[currentArea].completed = patrolData[currentArea].photos.length > 0;
+                    updateCompletionStatus();
+                    showNotification('Foto tersimpan dihapus!', 'info');
+                }
+                
+                updatePhotoCounter();
+                updatePhotoPreview();
+            }
+        }
+
+        function addGlobalDescription() {
+            const globalDesc = document.getElementById('globalDescription').value.trim();
+            
+            if (!globalDesc) {
+                showNotification('Isi deskripsi global terlebih dahulu!', 'warning');
+                return;
+            }
+            
+            // Apply to all current session photos
+            currentPhotos.forEach(photo => {
+                if (!photo.description) {
+                    photo.description = globalDesc;
+                }
+            });
+            
+            updatePhotoPreview();
+            showNotification(`Deskripsi global diterapkan ke ${currentPhotos.length} foto!`, 'success');
+        }
+
+        function saveAllPhotos() {
+            if (!currentArea || currentPhotos.length === 0) {
+                showNotification('Tidak ada foto untuk disimpan!', 'warning');
+                return;
+            }
+            
+            const globalDesc = document.getElementById('globalDescription').value;
+            
+            currentPhotos.forEach(photo => {
+                patrolData[currentArea].photos.push(photo.data);
+                patrolData[currentArea].descriptions.push(photo.description || globalDesc);
+            });
+            
+            patrolData[currentArea].completed = true;
+            currentPhotos = [];
+            
+            updatePhotoCounter();
+            updatePhotoPreview();
+            updateCompletionStatus();
+            
+            showNotification(`${patrolData[currentArea].photos.length} foto berhasil disimpan di area ${patrolData[currentArea].name}!`, 'success');
+        }
+
+        // ==================================================
+        // STATUS & COMPLETION
+        // ==================================================
+        function updateCompletionStatus() {
+            const container = document.getElementById('completionStatus');
+            container.innerHTML = '';
+            
+            Object.keys(patrolData).forEach(key => {
+                const area = patrolData[key];
+                const statusDiv = document.createElement('div');
+                statusDiv.className = `area-status ${area.completed ? 'completed' : 'pending'}`;
+                statusDiv.innerHTML = `
+                    <div>${key}. ${area.name}</div>
+                    <div>${area.completed ? '✅ SELESAI' : '⏳ PENDING'} (${area.photos.length} foto)</div>
+                `;
+                container.appendChild(statusDiv);
+            });
+        }
+
+        // ==================================================
+        // DATA MANAGEMENT
+        // ==================================================
+        function saveData() {
+            // Save to localStorage if needed
+            console.log('Data saved');
+        }
+
+        function clearAllData() {
+            if (confirm('Hapus semua data?')) {
+                initializePatrolData();
+                currentArea = null;
+                currentPhotos = [];
+                customAreas = [];
+                nextAreaId = 7;
+                
+                document.getElementById('currentAreaDisplay').style.display = 'none';
+                document.getElementById('globalDescription').value = '';
+                document.getElementById('additionalNotes').value = '';
+                document.getElementById('petugasName').value = '';
+                document.getElementById('shift').value = '';
+                
+                updateAreaButtonsLayout();
+                updatePhotoPreview();
+                updateCompletionStatus();
+                setCurrentDateTime();
+                
+                showNotification('Semua data direset!', 'success');
+            }
+        }
+
+        // ==================================================
+        // SIGNATURE & PDF (Placeholder)
+        // ==================================================
+        function clearSignature() {
+            showNotification('Fitur signature dalam pengembangan', 'info');
+        }
+
+        function generatePDF() { window.generatePDF(); }
+
+        // ==================================================
+        // INITIALIZE APP
+        // ==================================================
+        window.onload = initializeApp;
+    </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    // Show/hide password toggle
+    const toggle = document.getElementById('showPasswordToggle');
+    const pwd = document.getElementById('passwordInput');
+    if (toggle && pwd) {
+        toggle.addEventListener('change', ()=> {
+            pwd.type = toggle.checked ? 'text' : 'password';
+        });
+    }
+
+    // Hide any logo upload controls if present
+    const logoUpload = document.getElementById('logoUpload');
+    if (logoUpload) logoUpload.style.display = 'none';
+    // Insert centered logo under header (if not present)
+    if (!document.getElementById('logoCenter')) {
+        const container = document.querySelector('.container') ||const container = document.body;
+        const logoDiv = document.createElement('div');
+        logoDiv.id = 'logoCenterWrap';
+        logoDiv.style.textAlign = 'center';
+        logoDiv.style.padding = '18px 0';
+        logoDiv.innerHTML = '<img id=const container = document.body;"logoCenterconst container = document.body;" src=const container = document.body;"const container = document.body;" alt=const container = document.body;"Logoconst container = document.body;" style=const container = document.body;"max-width:180px; width:35%; height:auto; display:block; margin:0 auto;const container = document.body;" />';
+        container.insertBefore(logoDiv, container.firstChild);
+    }
+
+    // Create signature modal (if not already present)
+    if (!document.getElementById('signatureModal')) {
+        const sigModal = document.createElement('div');
+        sigModal.id = 'signatureModal';
+        sigModal.style.cssText = 'position:fixed;left:0;top:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);z-index:9999;';
+        sigModal.innerHTML = `
+            <div style="background:white;padding:16px;border-radius:10px;width:92%;max-width:720px;">
+                <h3 style="margin:0 0 8px 0;">Tanda Tangan Petugas</h3>
+                <canvas id="signaturePad" style="border:2px dashed #3498db;border-radius:10px;width:100%;height:260px;touch-action: none;"></canvas>
+                <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;">
+                    <button id="sigSaveBtn" class="btn btn-primary">Simpan</button>
+                    <button id="sigClearBtn" class="btn btn-secondary">Hapus</button>
+                    <button id="sigCloseBtn" class="btn btn-danger">Tutup</button>
+                </div>
+            </div>`;
+        document.body.appendChild(sigModal);
+
+        // Canvas drawing logic
+        const canvas = sigModal.querySelector('#signaturePad');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            const w = canvas.clientWidth;
+            const h = canvas.clientHeight;
+            canvas.width = w * ratio;
+            canvas.height = h * ratio;
+            canvas.style.width = w + 'px';
+            canvas.style.height = h + 'px';
+            ctx.scale(ratio, ratio);
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#222';
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function startPos(e){
+            drawing = true;
+            ctx.beginPath();
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+            ctx.moveTo(x,y);
+        }
+        function movePos(e){
+            if(!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+            ctx.lineTo(x,y);
+            ctx.stroke();
+        }
+        function endPos(){
+            drawing = false;
+        }
+
+        canvas.addEventListener('mousedown', startPos);
+        canvas.addEventListener('mousemove', movePos);
+        window.addEventListener('mouseup', endPos);
+        canvas.addEventListener('touchstart', startPos);
+        canvas.addEventListener('touchmove', movePos);
+        window.addEventListener('touchend', endPos);
+
+        // Buttons
+        document.getElementById('sigClearBtn').addEventListener('click', function(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+        });
+        document.getElementById('sigCloseBtn').addEventListener('click', function(){
+            sigModal.style.display='none';
+        });
+        document.getElementById('sigSaveBtn').addEventListener('click', function(){
+            // Save signature to current area if selected, otherwise to localStorage
+            const dataUrl = canvas.toDataURL('image/png');
+            if (typeof currentArea !== 'undefined' && currentArea && window.patrolData && window.patrolData[currentArea]) {
+                window.patrolData[currentArea].signature = dataUrl;
+                showNotification('Tanda tangan tersimpan untuk area saat ini', 'success');
+            } else {
+                localStorage.setItem('patrol_signature', dataUrl);
+                showNotification('Tanda tangan disimpan sementara', 'success');
+            }
+            sigModal.style.display='none';
+            updateSignaturePreview();
+        });
+
+        // Add an "Open Signature" button near any TANDA TANGAN header found
+        const headers = Array.from(document.querySelectorAll('*')).filter(el => el.innerText && /TANDA TANGAN/i.test(el.innerText));
+        if (headers.length) {
+            const header = headers[0];
+            const openBtn = document.createElement('button');
+            openBtn.textContent = '✍️ Isi Tanda Tangan';
+            openBtn.className = 'btn btn-primary';
+            openBtn.style.marginTop = '10px';
+            openBtn.onclick = function(){ sigModal.style.display='flex'; };
+            // append after header
+            header.parentNode.insertBefore(openBtn, header.nextSibling);
+        }
+    } // end if signature modal not present
+
+    // Function to update signature preview images in UI
+    window.updateSignaturePreview = function() {
+        const imgEls = document.querySelectorAll('.signature-preview');
+        imgEls.forEach(img => {
+            const areaId = img.dataset.areaId;
+            if (areaId && window.patrolData && window.patrolData[areaId] && window.patrolData[areaId].signature) {
+                img.src = window.patrolData[areaId].signature;
+            } else if (localStorage.getItem('patrol_signature')) {
+                img.src = localStorage.getItem('patrol_signature');
+            } else {
+                // leave as is
+            }
+        });
+    };
+
+    // Bind click to existing "Hapus Tanda Tangan" button(s) if present to also clear saved signature
+    Array.from(document.querySelectorAll('button')).forEach(b => {
+        if (b.innerText && /Hapus Tanda Tangan/i.test(b.innerText)) {
+            b.addEventListener('click', function(){
+                if (typeof currentArea !== 'undefined' && currentArea && window.patrolData && window.patrolData[currentArea]) {
+                    delete window.patrolData[currentArea].signature;
+                    showNotification('Tanda tangan area dihapus', 'success');
+                } else {
+                    localStorage.removeItem('patrol_signature');
+                    showNotification('Tanda tangan sementara dihapus', 'success');
+                }
+                updateSignaturePreview();
+            });
+        }
+    });
+
+    // PDF generation function (uses html2canvas + jsPDF)
+    window.generatePDF = async function() {
+        try {
+            const container = document.querySelector('.container') ||const container = document.body;
+            showNotification('Membuat PDF, harap tunggu...', 'info');
+            // use html2canvas to render
+            const canvas = await html2canvas(container, { scale: 1.5, useCORS: true, logging: false });
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf || window.jspdf === undefined ? window.jspdf || {} : window.jspdf;
+            // create pdf with portrait orientation A4
+            const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            // calculate aspect fit
+            const imgProps = { width: canvas.width, height: canvas.height };
+            const ratio = Math.min(pageWidth / imgProps.width * 0.264583, pageHeight / imgProps.height * 0.264583); // px->mm
+            const imgWidthMM = imgProps.width * 0.264583 * ratio;
+            const imgHeightMM = imgProps.height * 0.264583 * ratio;
+            pdf.addImage(imgData, 'PNG', (pageWidth - imgWidthMM)/2, 10, imgWidthMM, imgHeightMM);
+            pdf.save('laporan-patroli.pdf');
+            showNotification('PDF berhasil dibuat dan diunduh', 'success');
+        } catch (err) {
+            console.error(err);
+            showNotification('Gagal membuat PDF. Pastikan koneksi internet aktif (library CDN) atau buka di browser desktop.', 'error');
+        }
+    };
+
+    // If there was a 'Download Laporan PDF' button that called generatePDF placeholder earlier, ensure it now calls window.generatePDF
+    Array.from(document.querySelectorAll('button, a')).forEach(el => {
+        if (el.innerText && /Download Laporan PDF/i.test(el.innerText)) {
+            el.addEventListener('click', function(e){
+                e.preventDefault();
+                window.generatePDF();
+            });
+        }
+    });
+
+    // Small helper to show notification if showNotification exists
+    if (!window.showNotification) {
+        window.showNotification = function(msg, type){
+            alert(msg);
+        };
+    }
+
+    // initial signature preview update
+    updateSignaturePreview();
+});
+
+    // Logo upload handlers
+    (function(){
+        const logoInput = document.getElementById('logoUpload');
+        const logoImg = document.getElementById('logoCenter');
+        const removeBtn = document.getElementById('removeLogoBtn');
+
+        // Load saved logo from localStorage
+        try {
+            const saved = localStorage.getItem('patrol_logo');
+            if (saved) {
+                logoImg.src = saved;
+                logoImg.style.display = 'block';
+                removeBtn.style.display = 'inline-block';
+            } else {
+                logoImg.style.display = 'none';
+                removeBtn.style.display = 'none';
+            }
+        } catch(e){ console.warn(e); }
+
+        if (logoInput) {
+            logoInput.addEventListener('change', function(e){
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                if (!file.type.startsWith('image/')) { alert('Pilih file gambar.'); return; }
+                const reader = new FileReader();
+                reader.onload = function(ev){
+                    const data = ev.target.result;
+                    logoImg.src = data;
+                    logoImg.style.display = 'block';
+                    removeBtn.style.display = 'inline-block';
+                    try { localStorage.setItem('patrol_logo', data); } catch(err){ console.warn('localStorage error', err); }
+                    showNotification('Logo diunggah dan akan muncul di halaman sampul PDF.', 'success');
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        if (removeBtn) {
+            removeBtn.addEventListener('click', function(){
+                logoImg.src = '';
+                logoImg.style.display = 'none';
+                removeBtn.style.display = 'none';
+                try { localStorage.removeItem('patrol_logo'); } catch(e){ console.warn(e); }
+                logoInput.value = '';
+                showNotification('Logo dihapus.', 'info');
+            });
+        }
+
+        // Ensure logo is visible in cover when generating PDF. The existing generatePDF uses html2canvas on container.
+        // We ensure coverSection is included since it's before .container. No further changes needed.
+    })();
+
+</script>
+
+</body>
+</html>
